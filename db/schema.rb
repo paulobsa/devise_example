@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180214175841) do
+ActiveRecord::Schema.define(version: 20180214191954) do
 
   create_table "brands", force: :cascade do |t|
     t.string "name"
@@ -33,6 +33,15 @@ ActiveRecord::Schema.define(version: 20180214175841) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["continent_id"], name: "index_countries_on_continent_id"
+  end
+
+  create_table "vehicles", force: :cascade do |t|
+    t.string "name"
+    t.date "launch_date"
+    t.integer "brand_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["brand_id"], name: "index_vehicles_on_brand_id"
   end
 
 end
