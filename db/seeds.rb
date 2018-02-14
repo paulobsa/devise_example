@@ -5,3 +5,15 @@
 #
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
+
+puts "Inserting continents"
+
+if (Continent.all.empty?) then
+	Continent.create(name: "Africa")
+	Continent.create(name: "Asia")
+	Continent.create(name: "Europe")
+	Continent.create(name: "North America")
+	Continent.create(name: "South America")
+	Continent.create(name: "Antarctica")
+	Continent.create(name: "Oceania")
+end
