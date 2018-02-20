@@ -1,7 +1,7 @@
 Rails.application.routes.draw do
+  root 'vehicles#index' 
   devise_for :users, :path_prefix => 'd'
   resources :users
-  root 'vehicles#index' 
   resources :vehicles
   resources :brands
   resources :countries
