@@ -1,7 +1,7 @@
 class UsersController < ApplicationController
   before_action :authenticate_user!
   before_action :set_user, only: [:show, :edit, :update, :destroy]
-  before_action :authorize_admin, except: [:change_password]
+  before_action :authorize_admin, except: [:change_password, :update_password]
 
   # GET /users
   # GET /users.json
@@ -25,6 +25,19 @@ class UsersController < ApplicationController
 
   def change_password
     @user = current_user
+  end
+
+  def update_password
+    @user = current_user
+
+    if @user.update_with_password(update_password_params)
+      # Sign in the user by passing validation in case their password changed
+      bypass_sign_in(@user)
+      redirect_to root_path, notice: 'Password was successfully updated.'
+    else
+      render "change_password"
+    end
+    
   end
 
   # POST /users
@@ -78,7 +91,11 @@ class UsersController < ApplicationController
       params.require(:user).permit(:email, :password, :password_confirmation, :role)
     end
 
-	def authorize_admin
+    def update_password_params
+      params.require(:user).permit(:password, :password_confirmation, :current_password)
+    end
+
+	  def authorize_admin
       return unless !current_user.admin?
       respond_to do |format|
       	format.html { redirect_to root_path, notice: 'Admins only!' }
